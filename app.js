@@ -1,24 +1,13 @@
 const express = require('express');
+const connectDB = require('./db');
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log('Requête reçue !');
-  next();
-});
+// Connect to MongoDB
+connectDB();
 
-app.use((req, res, next) => {
-  res.status(201);
-  next();
-});
+app.get('/', (req, res) => res.send('API Running'));
 
-app.use((req, res, next) => {
-  res.json({ message: 'Votre requête a bien été reçue !' });
-  next();
-});
+const PORT = process.env.PORT || 5000;
 
-app.use((req, res, next) => {
-  console.log('Réponse envoyée avec succès !');
-});
-
-module.exports = app;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
